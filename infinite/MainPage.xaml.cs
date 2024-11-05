@@ -41,5 +41,43 @@ public partial class MainPage : ContentPage
 		HorizontalStackLayout3.WidthRequest = w*1.5;
 		HorizontalStackLayoutChao.WidthRequest = w*1.5;
 	}
+	void GerenciaCenarios()
+	{
+		MoveCenario();
+		GerenciaCenarios(HorizontalStackLayout1);
+		GerenciaCenarios(HorizontalStackLayout2);
+		GerenciaCenarios(HorizontalStackLayout3);
+		GerenciaCenarios(HorizontalStackLayoutChao);
+	}
+	void MoveCenario()
+	{
+		HorizontalStackLayout1.TranslationX -= velocidade1;
+		HorizontalStackLayout2.TranslationX -= velocidade2;
+		HorizontalStackLayout3.TranslationX -= velocidade3;
+		HorizontalStackLayoutChao.TranslationX -= velocidade;
+	}
+	void GerenciaCenarios(HorizontalStackLayout hsl)
+	{
+		var view = (hsl.Childrew.First() as Image);
+		if (view.WidthRequest + hsl.TranslationX < 0)
+		{
+			hsl.Children.Remove(view);
+			hsl.Children.Add(view);
+			hsl.TranslationX = view.TranslationX;
+		}
+	}
+	async Task Desenha()
+	{
+		while(!estaMorto)
+		{
+			GerenciaCenarios();
+			await Task.Delay(tempoEntreFrames);
+		}
+	}
+	protected override void OnAppearing()
+	{
+		base.OnAppearing();
+		Desenha();
+	}
 }
 
