@@ -2,82 +2,123 @@
 
 public partial class MainPage : ContentPage
 {
-	bool estaMorto = false;
-	bool estaPulando = false;
-	const int tempoEntreFrames = 25;
-	    int velocidade1 = 0;
-		int velocidade2 = 0;
-		int velocidade3 = 0;
-		int velocidade = 0;
-		int larguraJanela = 0;
-		int alturajanela = 0;
+	
 
-	protected override void OnSizeAllocated (double w, double h)
+	bool estamorto = false;
+
+	bool tapuland = false;
+	
+
+	const int TimeToFrame = 25;
+
+	int velocidadedaprimeiraimg = 0;
+	
+	int velocidadedasegundaimg = 0;
+	
+	int velocidadedaterceiraimg = 0;
+	
+	int velecidadedochao = 0;
+	
+	int alturadajanela = 0;
+
+	int larguradajanela = 0;
+
+
+	public MainPage()
 	{
-		base.OnSizeAllocated (w, h);
-		CorrigeTamanhoCenario (w, h);
-		CalculaVelocidade(w);
+		InitializeComponent();
 	}
-	void CalculaVelocidade (double w)
+
+
+	protected override void OnSizeAllocated(double w, double h)
 	{
-		velocidade1 = (int) (w*0.001);
-		velocidade2 = (int) (w*0.004);
-		velocidade3 = (int) (w*0.008);
-		velocidade = (int) (w*0.01);
+		base.OnSizeAllocated(w, h);
+		FixScreenSize(w, h);
+		CalculateSpeed(w);
 	}
-	void CorrigeTamanhoCenario(double w, double h)
-	{
-		foreach (var a in HorizontalStackLayout1.Childrew)
-			(a as Image).WidthRequest = w;
-		foreach (var a in HorizontalStackLayout2.Childrew)
-		    (a as Image).HeightRequest = w;
-		foreach (var a in HorizontalStackLayout3.Childrew)
-		    (a as Image).HeightRequest = w;	
-		foreach (var a in HorizontalStackLayoutChao.Childrew)
-		    (a as Image).HeightRequest = w;
-		
-		HorizontalStackLayout1.WidthRequest = w*1.5;
-		HorizontalStackLayout2.WidthRequest = w*1.5;
-		HorizontalStackLayout3.WidthRequest = w*1.5;
-		HorizontalStackLayoutChao.WidthRequest = w*1.5;
-	}
-	void GerenciaCenarios()
-	{
-		MoveCenario();
-		GerenciaCenarios(HorizontalStackLayout1);
-		GerenciaCenarios(HorizontalStackLayout2);
-		GerenciaCenarios(HorizontalStackLayout3);
-		GerenciaCenarios(HorizontalStackLayoutChao);
-	}
-	void MoveCenario()
-	{
-		HorizontalStackLayout1.TranslationX -= velocidade1;
-		HorizontalStackLayout2.TranslationX -= velocidade2;
-		HorizontalStackLayout3.TranslationX -= velocidade3;
-		HorizontalStackLayoutChao.TranslationX -= velocidade;
-	}
-	void GerenciaCenarios(HorizontalStackLayout hsl)
-	{
-		var view = (hsl.Childrew.First() as Image);
-		if (view.WidthRequest + hsl.TranslationX < 0)
-		{
-			hsl.Children.Remove(view);
-			hsl.Children.Add(view);
-			hsl.TranslationX = view.TranslationX;
-		}
-	}
-	async Task Desenha()
-	{
-		while(!estaMorto)
-		{
-			GerenciaCenarios();
-			await Task.Delay(tempoEntreFrames);
-		}
-	}
+
 	protected override void OnAppearing()
 	{
 		base.OnAppearing();
-		Desenha();
+		Drawn();
 	}
-}
 
+	void FixScreenSize(double w, double h)
+	{
+		foreach (var A in primeiraimg.Children)
+			(A as Image).WidthRequest = w;
+		foreach (var A in segundaimg.Children)
+			(A as Image).WidthRequest = w;
+		foreach (var A in terceiraimg.Children)
+			(A as Image).WidthRequest = w;
+		foreach (var A in quartaimg.Children)
+			(A as Image).WidthRequest = w;
+
+		primeiraimg.WidthRequest = w * 1.5;
+		segundaimg.WidthRequest = w * 1.5;
+		terceiraimg.WidthRequest = w * 1.5;
+		quartaimg.WidthRequest = w * 1.5;
+	}
+
+	void CalculateSpeed(double w)
+	{
+		velocidadedaprimeiraimg = (int)(w * 0.001);
+		velocidadedasegundaimg = (int)(w * 0.004);
+		velocidadedaterceiraimg = (int)(w * 0.008);
+		velecidadedochao = (int)(w * 0.01);
+	}
+
+	async Task Drawn()
+	{
+		while (!estamorto)
+		{
+			ManageScenes();
+			await Task.Delay(TimeToFrame);
+		}
+	}
+
+	void MoveScene()
+	{
+		primeiraimg.TranslationX -= velocidadedaprimeiraimg;
+		segundaimg.TranslationX -= velocidadedasegundaimg;
+		terceiraimg.TranslationX -= velocidadedaterceiraimg;
+		quartaimg.TranslationX -= velecidadedochao;
+	}
+
+	void ManageScenes()
+	{
+		MoveScene();
+		ManageScene(primeiraimg);
+		ManageScene(segundaimg);
+		ManageScene(terceiraimg);
+		ManageScene(quartaimg);
+	}
+
+
+	void ManageScene(HorizontalStackLayout HSL)
+	{
+		var view = (HSL.Children.First() as Image);
+		if (view.WidthRequest + HSL.TranslationX < 0)
+		{
+			HSL.Children.Remove(view);
+			HSL.Children.Add(view);
+			HSL.TranslationX = view.TranslationX;
+		}
+	}
+	public class Animacao
+	{
+		protected List<string> Animacao1 = new List<String>();
+		protected List<string> Animacao2 = new List<String>();
+		protected List<string> Animacao3 = new List<String>();
+		protected bool Loop = true;
+		//protected bool AnimacaoAtiva = 1;//
+		bool parado = true;
+		int frameAtual = 1;
+		protected Image compImage;
+		public Animacao(Image a)
+		{
+			compImage = a;
+		}
+	}
+	
+}
