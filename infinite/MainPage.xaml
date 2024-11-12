@@ -53,15 +53,23 @@
          <Image Source="chao.png"
                 Aspect="Fill"
                 VerticalOptions="End"
-                HeightRequest="200"/>
+                HeightRequest="100"/>
          <Image Source="chao.png"
                 Aspect="Fill"
                 VerticalOptions="End"
-                HeightRequest="200"/>
+                HeightRequest="100"/>
          <Image Source="chao.png"
                 Aspect="Fill"
                 VerticalOptions="End"
-                HeightRequest="200"/>
+                HeightRequest="100"/>
       </HorizontalStackLayout>
+
+      <Image x:Name="lobo"
+             Source="lobo01.png"
+             HeightRequest="200"
+             WidthRequest="200"
+             VerticalOptions="End"
+             HorizontalOptions="Start"
+             Margin="0,0,0,55"/>
    </Grid>
 </ContentPage>
