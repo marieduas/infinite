@@ -15,6 +15,15 @@ public partial class MainPage : ContentPage
 	int velecidade = 0;
 	int alturadajanela = 0;
 	int larguradajanela = 0;
+	const int forcaGravidade = 6;
+	bool estaNoChao = true;
+	bool estaNoAr = false;
+	bool estaPulando = false;
+	int tempoPulando = 0;
+	int tempoNoAr = 0;
+	const int forcaPulo = 8;
+	const int maxTempoPulando = 6;
+	const int maxTempoNoAr = 4;
 
 
 	public MainPage()
@@ -30,6 +39,11 @@ public partial class MainPage : ContentPage
 		base.OnSizeAllocated(w, h);
 		CorrigeTamanhoCenario(w, h);
 		CalculaVelocidade(w);
+		Inimigos=new Inimigos(-w);
+		Inimigos.Add(new Inimigo(imginimigo1));
+		Inimigos.Add(new Inimigo(imginimigo2));
+		Inimigos.Add(new Inimigo(imginimigo3));
+		Inimigos.Add(new Inimigo(imginimigo4));
 	}
 	void CalculaVelocidade(double w)
 	{
@@ -88,6 +102,20 @@ public partial class MainPage : ContentPage
 			GerenciaCenarios();
 			await Task.Delay(tempoEntreFrame);
 			Player.Desenha;
+			while(!estamorto)
+			{
+				GerenciaCenarios();
+				if (Inimigos!=null)
+				    Inimigos.Desenha(velocidade);
+				if (!estaPulando && !estaNoAr)
+				{
+					AplicaGravidade();
+					PlayerDesenha();
+				}
+				else
+					AplicaPulo();
+					await Task.Delay(tempoEntreFrame);
+			}
 		}
 	}
     protected override void OnAppearing()
@@ -95,5 +123,39 @@ public partial class MainPage : ContentPage
         base.OnAppearing();
 		Desenha();
     }
+	void AplicaGravidade()
+	{
+		if (Player.GetY()<0)
+			player.MoveY(forcaGravidade);
+		else if (Player.GetY()>0)
+		{
+			Player.SetY(0);
+			estaNoChao = true;
+		}
+	}
+	void AplicaPulo()
+	{
+		estaNoChao = false;
+		if (estaPulando && tempoPulando>=maxTempoPulando)
+		{
+			estaPulando = false;
+			estaNoAr = true;
+			tempoNoAr = 0;
+		}
+		else if (estaNoAr && tempoNoAr>=maxTempoNoAr)
+		{
+			estaPulando = false;
+			tempoPulando = 0;
+			estaNoAr = false;
+			tempoNoAr = 0;
+		}
+		else if (estaPulando && tempoPulando<maxTempoPulando)
+		{
+			Player.MoveY (-forcaPulo);
+			tempoPulando++;
+		}
+		else if (estaNoAr)
+			tempoNoAr++;
+	}
 
 }
