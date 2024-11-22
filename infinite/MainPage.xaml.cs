@@ -18,7 +18,6 @@ public partial class MainPage : ContentPage
 	const int forcaGravidade = 6;
 	bool estaNoChao = true;
 	bool estaNoAr = false;
-	bool estaPulando = false;
 	int tempoPulando = 0;
 	int tempoNoAr = 0;
 	const int forcaPulo = 8;
@@ -29,8 +28,8 @@ public partial class MainPage : ContentPage
 	public MainPage()
 	{
 		InitializeComponent();
-		player = new Player(lobo);
-		player.Run();
+		Player = new Player(lobo);
+		Player.Run();
 	}
 
 
@@ -40,10 +39,10 @@ public partial class MainPage : ContentPage
 		CorrigeTamanhoCenario(w, h);
 		CalculaVelocidade(w);
 		Inimigos=new Inimigos(-w);
-		Inimigos.Add(new Inimigo(imginimigo1));
-		Inimigos.Add(new Inimigo(imginimigo2));
-		Inimigos.Add(new Inimigo(imginimigo3));
-		Inimigos.Add(new Inimigo(imginimigo4));
+		Inimigos.Add(new Inimigo(inimigo1));
+		Inimigos.Add(new Inimigo(inimigo2));
+		Inimigos.Add(new Inimigo(inimigo3));
+		Inimigos.Add(new Inimigo(inimigo4));
 	}
 	void CalculaVelocidade(double w)
 	{
@@ -56,13 +55,13 @@ public partial class MainPage : ContentPage
 	void CorrigeTamanhoCenario(double w, double h)
 	{
 		foreach (var A in primeiraimg.Children)
-			(A as Image).WidthRequest = w;
+			(A as inimigo1).WidthRequest = w;
 		foreach (var A in segundaimg.Children)
-			(A as Image).WidthRequest = w;
+			(A as inimigo2).WidthRequest = w;
 		foreach (var A in terceiraimg.Children)
-			(A as Image).WidthRequest = w;
+			(A as inimigo3).WidthRequest = w;
 		foreach (var A in quartaimg.Children)
-			(A as Image).WidthRequest = w;
+			(A as inimigo4).WidthRequest = w;
 
 		primeiraimg.WidthRequest = w * 1.5;
 		segundaimg.WidthRequest = w * 1.5;

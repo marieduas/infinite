@@ -1,3 +1,4 @@
+﻿using FFImageLoading.Maui;
 namespace infinite;
 public class Inimigo
 {

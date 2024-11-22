@@ -1,3 +1,5 @@
+using FFImageLoading.Maui;
+
 namespace infinite;
 public delegate void Callback();
 public class Player : Animation
