@@ -1,7 +1,9 @@
 using FFImageLoading.Maui;
-namespace infinite
-{
-public class Animation
+
+namespace infinite;
+
+
+public class Animacao
 {
     protected List<String> Animacao1 = new List<String>();
 
@@ -15,6 +17,7 @@ public class Animation
 
     protected CachedImageView ImageView;
 
+   
 
 
     private bool  Parado = true;
@@ -23,10 +26,9 @@ public class Animation
 
     
 
-    public Animation (CachedImageView a)
+    public Animacao (CachedImageView  a)
     {
-        ImageView = a
-        ;
+         ImageView = a;
     }
 
 
@@ -36,7 +38,7 @@ public class Animation
         Parado = true;
     }
 
-    public void Play()
+    public void Corre()
     {
         Parado = false;
     }
@@ -97,4 +99,4 @@ public class Animation
 
 
 }
-}
+

@@ -2,7 +2,8 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="infinite.MainPage"
-             Shell.NavBarIsVisible="false">
+             Shell.NavBarIsVisible="false"
+              xmlns:ff="clr-namespace:FFImageLoading.Maui;assembly=FFImageLoading.Maui">
 
 
    <Grid>
@@ -64,12 +65,46 @@
                 HeightRequest="100"/>
       </HorizontalStackLayout>
 
-      <Image x:Name="lobo"
+      <ff:CachedImageView x:Name="lobo"
              Source="lobo01.png"
              HeightRequest="200"
              WidthRequest="200"
              VerticalOptions="End"
              HorizontalOptions="Start"
              Margin="0,0,0,55"/>
+
+       <Image x:Name="inimigo1"
+              Source="inimigo1.png"
+              HeightRequest="200"
+              WidthRequest="200"
+              VerticalOptions="End"
+              HorizontalOptions="End"
+              Margin="0,0,0,55"/>
+
+       <Image x:Name="inimigo2"
+              Source="inimigo2.png"
+              HeightRequest="200"
+              WidthRequest="200"
+              VerticalOptions="End"
+              HorizontalOptions="End"
+              Margin="0,0,0,55"/>
+
+       <Image x:Name="inimigo3"
+              Source="inimigo3.png"
+              HeightRequest="200"
+              WidthRequest="200"
+              VerticalOptions="End"
+              HorizontalOptions="End"
+              Margin="0,0,0,55"/>
+
+       <Image x:Name="inimigo4"
+              Source="inimigo4.png"
+              HeightRequest="200"
+              WidthRequest="200"
+              VerticalOptions="End"
+              HorizontalOptions="End"
+              Margin="0,0,0,55"/>
+
+
    </Grid>
 </ContentPage>
